@@ -30,8 +30,15 @@ class App extends Component {
         { name: event.target.value, age: 11 },
         { name: 'Zac', age: 9 },
         { name: 'Sophie', age: 21 }
-      ]
+      ],
+      showPersons: false
     });
+  }
+
+  togglePersonsHandler = () => {
+    // const doesShow = this.state.showPersons;
+    // this.setState({showPersons: !doesShow});
+    this.setState({ showPersons: !this.state.showPersons });
   }
 
   render() {
@@ -43,27 +50,36 @@ class App extends Component {
       cursor: 'pointer'
     };
 
+    let persons = null;
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person
+            click={this.switchNameHandler.bind(this, 'Mark')}
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age} />
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            changed={this.nameChangedHandler} />
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age} />
+          <Person
+            name={this.state.persons[3].name}
+            age={this.state.persons[3].age} />
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App!</h1>
         <p>This is really working!!!</p>
-        <button 
+        <button
           style={style}
-          onClick={() => this.switchNameHandler('Marky Mark!')}>Switch Name</button>
-        <Person
-          click={this.switchNameHandler.bind(this, 'Mark')}
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age} />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age} 
-          changed={this.nameChangedHandler}/>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age} />
-        <Person
-          name={this.state.persons[3].name}
-          age={this.state.persons[3].age} />
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+          {persons}
       </div>
     );
   }
